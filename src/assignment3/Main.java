@@ -19,6 +19,7 @@ import java.io.*;
 public class Main {
 	
 	// static variables and constants only here.
+	private static Set<String> dict;
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -42,6 +43,7 @@ public class Main {
 		// initialize your static variables or constants here.
 		// We will call this method before running our JUNIT tests.  So call it 
 		// only once at the start of main.
+		dict = makeDictionary();
 	}
 	
 	/**
@@ -51,7 +53,26 @@ public class Main {
 	 */
 	public static ArrayList<String> parse(Scanner keyboard) {
 		// TO DO
-		return null;
+		String start = keyboard.next();
+		if(start.equals("/quit"))
+				return null;
+		String end = keyboard.next();
+		boolean startcheck = false, endcheck = false;
+		ArrayList<String> ret = new ArrayList<String>();
+		for(String k : dict){
+			if(k.equals(start)){
+				ret.add(start);
+				startcheck = true;
+			}
+			if(k.equals(end)){
+				ret.add(end);
+				endcheck = true;
+			}
+		}
+		if(!(endcheck || startcheck))
+			return null;
+		else
+			return ret;
 	}
 	
 	public static ArrayList<String> getWordLadderDFS(String start, String end) {
@@ -59,7 +80,6 @@ public class Main {
 		// Returned list should be ordered start to end.  Include start and end.
 		// Return empty list if no ladder.
 		// TODO some code
-		Set<String> dict = makeDictionary();
 		// TODO more code
 		
 		return null; // replace this line later with real return
@@ -68,7 +88,6 @@ public class Main {
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
 		
 		// TODO some code
-		Set<String> dict = makeDictionary();
 		// TODO more code
 		
 		return null; // replace this line later with real return
