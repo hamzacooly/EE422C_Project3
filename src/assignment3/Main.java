@@ -110,7 +110,9 @@ public class Main {
 	}
 	
 	public static void printLadder(ArrayList<String> ladder) {
-		
+		for(String k: ladder){
+			System.out.println(k);
+		}
 	}
 	// TODO
 	// Other private static methods here
