@@ -4,10 +4,10 @@
  * hak533
  * 16220
  * Johnathan Love
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * jal5622
+ * 16220
  * Slip days used: 0
- * Git URL: 
+ * Git URL: https://github.com/hamzacooly/EE422C_Project3
  * Spring 2017
  */
 
@@ -20,6 +20,7 @@ public class Main {
 	
 	// static variables and constants only here.
 	private static Set<String> dict;
+	private static Graph g;
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -44,6 +45,21 @@ public class Main {
 		// We will call this method before running our JUNIT tests.  So call it 
 		// only once at the start of main.
 		dict = makeDictionary();
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		for(String k: dict){
+			Node n = new Node(k);
+			char[] p = k.toCharArray();
+			for(int i = 1; i <= 26; i++){
+				for(int j = 0; j < p.length; j++){
+					p[j] += i;
+					if(!p.toString().equals(k))
+						n.addEdge(p.toString());
+					p[j] -= i;
+				}
+			}
+			nodes.add(n);
+		}
+		g = new Graph(nodes);
 	}
 	
 	/**
@@ -54,9 +70,9 @@ public class Main {
 	public static ArrayList<String> parse(Scanner keyboard) {
 		// TO DO
 		String start = keyboard.next();
-		if(start.equals("/quit"))
-				return null;
 		String end = keyboard.next();
+		if(start.equals("/quit") || end.equals("/quit"))
+			return null;
 		boolean startcheck = false, endcheck = false;
 		ArrayList<String> ret = new ArrayList<String>();
 		for(String k : dict){
@@ -82,13 +98,16 @@ public class Main {
 		// TODO some code
 		// TODO more code
 		
+		
 		return null; // replace this line later with real return
 	}
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
-		
 		// TODO some code
 		// TODO more code
+    	
+    	Set<String> visitedNodes = new HashSet<String>();
+    	
 		
 		return null; // replace this line later with real return
 	}
