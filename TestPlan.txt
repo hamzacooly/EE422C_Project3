@@ -1,0 +1,91 @@
+Hamza Khatri hak533
+Johnathan Love jal5622
+Spring 2017
+
+Test plan summary:
+    Our goals were to fully test our code to the max. Our methodology was breadth over depth and corner cases,
+    meaning we tried to cover as much as possible without doing too many repeats. We used JUnit to test our
+    BFS and DFS methods, and console for other cases. We tested the entire methods. We covered lots of different
+    ladders, although it was rare to find two words that would not produce a ladder. We were able to smooth out 
+    kinks such as null pointer exceptions and some minor runtime errors through our test cases. We made heavy use 
+    of the methods in the provided test case.
+
+Test 1.
+    a) TestDFS1
+    b) Covers if ladder is correct
+    c) set up is same as provided test case
+    d) expected output: true
+    e) passes if ladder is as it should be, fails otherwise.
+    f) test should run fairly quickly
+
+Test 2.
+    a) TestBFS1
+    b) Covers if ladder is correct
+    c) set up is same as provided test case
+    d) expected output: true
+    e) passes if ladder is as it should be, fails otherwise.
+    f) test should run fairly quickly
+
+Test 3.
+    a) TestDFS2
+    b) Checks to see if ladder string at the beginning is correct
+    c) set up is same as provided test case
+    d) expected output: a <N>-rung word ladder exists between <start> and <finish>.
+    e) passes if string is as expected, fails otherwise
+    f) test should run fairly quickly
+
+Test 4.
+    a) TestBFS2
+    b) Checks to see if ladder string at the beginning is correct
+    c) set up is same as provided test case
+    d) expected output: a <N>-rung word ladder exists between <start> and <finish>.
+    e) passes if string is as expected, fails otherwise
+    f) test should run fairly quickly
+
+Test 5.
+    a) TestDFS3
+    b) Covers if search handles no ladder found correctly
+    c) set up is same as provided test case
+    d) expected output: no word ladder can be found between <start> and <finish>.
+    e) passes if string is as expected, fails otherwise
+    f) test should run fairly quickly
+
+Test 6.
+    a) TestBFS3
+    b) Covers if search handles no ladder found correctly
+    c) set up is same as provided test case
+    d) expected output: no word ladder can be found between <start> and <finish>.
+    e) passes if string is as expected, fails otherwise
+    f) test should run fairly quickly
+
+Test 7.
+    a) TestQuit1
+    b) Covers if /quit works as expected with start word
+    c) set up is same as provided test case
+    d) expected output: program quits
+    e) passes if program successfully quits
+    f) test should run fairly quickly
+
+Test 8.
+    a) TestQuit2
+    b) Covers if /quit works as expected with end word
+    c) set up is same as provided test case
+    d) expected output: program quits
+    e) passes if program successfully quits
+    f) test should run fairly quickly
+
+Test 9.
+    a) TestDFS4
+    b) Checks to see if length of ladder is correct
+    c) set up is same as provided test case
+    d) expected output: true
+    e) passes if ladder length is correct, fails otherwise
+    f) test should run fairly quickly
+
+Test 10.
+    a) TestBFS4
+    b) Checks to see if length of ladder is correct
+    c) set up is same as provided test case
+    d) expected output: true
+    e) passes if ladder length is correct, fails otherwise
+    f) test should run fairly quickly
