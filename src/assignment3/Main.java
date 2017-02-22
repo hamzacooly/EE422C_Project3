@@ -35,15 +35,26 @@ public class Main {
 			ps = System.out;			// default to Stdout
 		}
 		initialize();
-		
-		// TODO methods to read in words, output ladder
+		ArrayList<String> SearchTerms = new ArrayList<String>();
+		SearchTerms = parse(kb);
+		ArrayList<String> FinalWordLadder = new ArrayList<String>();
+		if(SearchTerms.get(0).equals("/quit") || SearchTerms.get(0).equals(null) || SearchTerms.get(1).equals(null)){
+			return;
+		}
+		FinalWordLadder = getWordLadderBFS(SearchTerms.get(0), SearchTerms.get(1));
+		if(FinalWordLadder.size() == 0){
+			FinalWordLadder.add(SearchTerms.get(0));
+			FinalWordLadder.add(SearchTerms.get(1));
+		}
+		printLadder(FinalWordLadder);
 	}
 	
 	public static void initialize() {
 		// initialize your static variables or constants here.
 		// We will call this method before running our JUNIT tests.  So call it 
 		// only once at the start of main.
-		dict = makeDictionary();
+
+		
 	}
 	
 	/**
@@ -57,22 +68,12 @@ public class Main {
 		if(start.equals("/quit"))
 				return null;
 		String end = keyboard.next();
-		boolean startcheck = false, endcheck = false;
+		start = start.toLowerCase();
+		end = end.toLowerCase();
 		ArrayList<String> ret = new ArrayList<String>();
-		for(String k : dict){
-			if(k.equals(start)){
-				ret.add(start);
-				startcheck = true;
-			}
-			if(k.equals(end)){
-				ret.add(end);
-				endcheck = true;
-			}
-		}
-		if(!(endcheck || startcheck))
-			return null;
-		else
-			return ret;
+		ret.add(start);
+		ret.add(end);
+		return ret;
 	}
 	
 	public static ArrayList<String> getWordLadderDFS(String start, String end) {
@@ -86,11 +87,49 @@ public class Main {
 	}
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
+		Set<String> dict = new HashSet<String>();
+		dict = makeDictionary();
+		Queue<Node> ExploreQueue = new LinkedList<Node>();
+    	Node StartWord = new Node(start, null);
+    	char[] WordArray = new char[5];
+    	Node EndWord = new Node(end);
+    	Node Current = new Node();
+    	String temp = null;
+    	ArrayList<String> AlreadyChecked = new ArrayList<String>();
+    	ArrayList<String> WordLadder = new ArrayList<String>();
+    	ExploreQueue.add(StartWord);
+    	AlreadyChecked.add(StartWord.name);
+    	
 		
-		// TODO some code
-		// TODO more code
-		
-		return null; // replace this line later with real return
+    	while(!ExploreQueue.isEmpty()){
+    		Current = ExploreQueue.remove();
+    		
+    		if(Current.name.equals(EndWord.name)){
+    			while(Current.parent != null){
+    				WordLadder.add(Current.name);
+    				Current = Current.parent;
+    			}
+    			WordLadder.add(Current.name);
+    			Collections.reverse(WordLadder);
+    			break;
+    		}
+    		
+        	for(int i = 0; i < 5; i++){
+        		for(char k = 'a'; k <= 'z'; k++){
+        			WordArray = Current.name.toCharArray();
+        			WordArray[i] = k;
+        			temp = String.valueOf(WordArray);
+        			temp = temp.toUpperCase();
+        			if(dict.contains(temp) && !temp.equals(Current.name.toUpperCase()) && !AlreadyChecked.contains(temp)){
+        				Current.adjList.add(new Node(temp.toLowerCase(), Current));
+        				AlreadyChecked.add(temp);
+        				ExploreQueue.add(new Node(temp.toLowerCase(), Current));
+        			}
+        		}
+        	}      	       	
+    	}
+    	
+		return WordLadder; 
 	}
     
 	public static Set<String>  makeDictionary () {
@@ -110,10 +149,18 @@ public class Main {
 	}
 	
 	public static void printLadder(ArrayList<String> ladder) {
-		for(String k: ladder){
-			System.out.println(k);
+		if(ladder.size() > 2){
+			int size = ladder.size()-2;
+			System.out.println("A " + size + "-rung ladder exists between " + ladder.get(0) + " and " + ladder.get(ladder.size()-1) + ".");
+			for(String k: ladder){
+				System.out.println(k);
+			}
+		}
+		else{
+			System.out.println("No word ladder can be found between " + ladder.get(0) + " and " + ladder.get(1) + ".");
 		}
 	}
 	// TODO
 	// Other private static methods here
 }
+
