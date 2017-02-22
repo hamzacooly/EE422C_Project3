@@ -34,19 +34,21 @@ public class Main {
 			kb = new Scanner(System.in);// default from Stdin
 			ps = System.out;			// default to Stdout
 		}
-		initialize();
-		ArrayList<String> SearchTerms = new ArrayList<String>();
-		SearchTerms = parse(kb);
-		ArrayList<String> FinalWordLadder = new ArrayList<String>();
-		if(SearchTerms.get(0).equals("/quit") || SearchTerms.get(0).equals(null) || SearchTerms.get(1).equals(null)){
-			return;
+		while(true){
+			initialize();
+			ArrayList<String> SearchTerms = new ArrayList<String>();
+			SearchTerms = parse(kb);
+			ArrayList<String> FinalWordLadder = new ArrayList<String>();
+			if(SearchTerms == null){
+				return;
+			}
+			FinalWordLadder = getWordLadderBFS(SearchTerms.get(0), SearchTerms.get(1));
+			if(FinalWordLadder.size() == 0){
+				FinalWordLadder.add(SearchTerms.get(0));
+				FinalWordLadder.add(SearchTerms.get(1));
+			}
+			printLadder(FinalWordLadder);
 		}
-		FinalWordLadder = getWordLadderBFS(SearchTerms.get(0), SearchTerms.get(1));
-		if(FinalWordLadder.size() == 0){
-			FinalWordLadder.add(SearchTerms.get(0));
-			FinalWordLadder.add(SearchTerms.get(1));
-		}
-		printLadder(FinalWordLadder);
 	}
 	
 	public static void initialize() {
@@ -86,12 +88,19 @@ public class Main {
 		return null; // replace this line later with real return
 	}
 	
+	
+	
+    /**
+     * @param start - The Start Word of the Word Ladder
+     * @param end   - The Destination Word of the Word Ladder
+     * @return ArrayList<String> - The Word Ladder between start and end obtained through BFS 
+     */
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
-		Set<String> dict = new HashSet<String>();
-		dict = makeDictionary();
-		Queue<Node> ExploreQueue = new LinkedList<Node>();
+	Set<String> dict = new HashSet<String>();
+	dict = makeDictionary();
+	Queue<Node> ExploreQueue = new LinkedList<Node>();
     	Node StartWord = new Node(start, null);
-    	char[] WordArray = new char[5];
+    	char[] WordArray = new char[StartWord.name.length()];
     	Node EndWord = new Node(end);
     	Node Current = new Node();
     	String temp = null;
@@ -101,11 +110,11 @@ public class Main {
     	AlreadyChecked.add(StartWord.name);
     	
 		
-    	while(!ExploreQueue.isEmpty()){
-    		Current = ExploreQueue.remove();
+    	while(!ExploreQueue.isEmpty()){					//Cycle through nodes until there are no more nodes
+    		Current = ExploreQueue.remove();			//Pop the queue once all adjacenies have been found for previous node
     		
-    		if(Current.name.equals(EndWord.name)){
-    			while(Current.parent != null){
+    		if(Current.name.equals(EndWord.name)){		//If that node is the end word, cycle back through parents
+    			while(Current.parent != null){			//and add them to the word ladder
     				WordLadder.add(Current.name);
     				Current = Current.parent;
     			}
@@ -114,9 +123,9 @@ public class Main {
     			break;
     		}
     		
-        	for(int i = 0; i < 5; i++){
-        		for(char k = 'a'; k <= 'z'; k++){
-        			WordArray = Current.name.toCharArray();
+        	for(int i = 0; i < StartWord.name.length(); i++){		//Cycle through each position in the word and fill it with each
+        		for(char k = 'a'; k <= 'z'; k++){					//letter, then check if it is in the dictionary
+        			WordArray = Current.name.toCharArray();			//If it is, add it to the adjacency list and the queue
         			WordArray[i] = k;
         			temp = String.valueOf(WordArray);
         			temp = temp.toUpperCase();

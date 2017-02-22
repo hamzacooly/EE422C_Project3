@@ -3,27 +3,21 @@ package assignment3;
 import java.util.ArrayList;
 
 public class Node {
-	private ArrayList<String> adjList = new ArrayList<String>();
-	private String name;
+	public ArrayList<Node> adjList = new ArrayList<Node>();
+	public String name;
+	public Node parent;
 	
-	public Node(ArrayList<String> adj, String n){
-		adjList = adj;
-		name = n;
+	public Node(){
+		
+	}
+	
+	public Node(String n, Node p){
+		this.name = n;
+		this.parent = p;
 	}
 	
 	public Node(String n){
 		this.name = n;
 	}
 	
-	public ArrayList<String> getAdj(){
-		return adjList;
-	}
-	
-	public void addEdge(String e){
-		adjList.add(e);
-	}
-	
-	public String getName(){
-		return name;
-	}
 }
